@@ -43,4 +43,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    //relacion usuario tiene varios posts
+    public function posts(){
+        return $this->hasMany(Post::class);  //hasMany = uno a muchos 
+    }
+
+    //relacion de likes, usuario puede tener n likes
+    public function likes(){
+        return $this->hasMany(Like::class); 
+    }
+
+    //Almacena los seguidores de un usuario
+    public function followers() {
+        return $this->belongsToMany(User::class,'followers', 'user_id','follower_id'); //pertenece a muchos esta relacion, especificamos la tabla followers por que nos salimos de las convenciones de laravel, tambien especificamos los FK de la tabla
+    }
+    
+    //Almacenar los que seguimos
+    public function followings() {
+        return $this->belongsToMany(User::class,'followers', 'follower_id','user_id'); //para los siguiendo hacemos la inversa de seguidores
+    }
+
+    //Comprobar si un usuario ya sigue a otro
+    public function siguiendo(User $user){
+        return $this->followers->contains($user->id); 
+    }
+    
+
 }

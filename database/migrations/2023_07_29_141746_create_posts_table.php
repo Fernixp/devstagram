@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('titulo');
             $table->text('descripcion');
             $table->string('imagen');
-            $table->foreignId('user_id')->constrained()->onDelete();
-            $table->timestamps();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');//el cascade es para eliminar problemas de integridad
+            $table->timestamps(); //este campo crea las columnas created_at , updated_at
         });
     }
 

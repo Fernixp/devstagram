@@ -28,6 +28,8 @@ services:
             - meilisearch
             - mailpit
             - selenium
+        cpus: 4
+        mem_limit: 6g
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
